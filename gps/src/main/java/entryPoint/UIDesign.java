@@ -162,12 +162,10 @@ public class UIDesign {
 								linearValues.setText(finalData.getUIArray().get(i));
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
 								if(finalData.getCurveData().get(curveCounter).getGpsLatLongStart().equals(offsetFromLinear[6])) {
-									String speed = finalData.getCurveData().get(curveCounter).isspeedflag() == true 
-											? "High Speed" : "Low Speed";
 									if(finalData.getCurveData().get(curveCounter).isDirection() == true) {
-										curvePrompt.setText(speed+" Left Curve Detected!!");
+										curvePrompt.setText("Left Curve Detected!!");
 									} else {
-										curvePrompt.setText(speed+" Right Curve Detected");
+										curvePrompt.setText(" Right Curve Detected");
 									}
 								}
 
