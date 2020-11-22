@@ -139,7 +139,7 @@ public class Parser {
 						String longitude = latLong[1].trim();
 						
 						//variable with lat long
-						String concatedLatLong = latitude + " : " + longitude;
+						String concatedLatLong = latitude + ":" + longitude;
 						
 						//for formatting reasons no logic
 						String timeStampString = timeStamp+"";

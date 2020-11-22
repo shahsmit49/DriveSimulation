@@ -42,6 +42,8 @@ public class UIDesign {
 		JTextField gpsEnd = new JTextField();
 		JTextField speedTypeField = new JTextField();
 		JTextField curveTypeField = new JTextField();
+		JTextField warningMessage = new JTextField();
+		JTextField distanceMessage = new JTextField();
 		
 		columnFormat = new JLabel(
 				"Time offset   |   Speed   |   Steering Angle    |    Yaw Rate   |   Lateral Acc.   |   Longi Acc.   |   GPS Lat:Lon ");
@@ -52,6 +54,8 @@ public class UIDesign {
 		JLabel endPosition = new JLabel("Curve End Position :");
 		JLabel speedTypeLabel = new JLabel("Speed Type : ");
 		JLabel curveTypeJLabel = new JLabel("Curve Type");
+		JLabel warningMessageLabel = new JLabel("Warnings : ");
+		JLabel distanceLabel = new JLabel("Distance to Curve : ");
 
 		startButton.setBounds(150, 50, 200, 30);
 		resetButton.setBounds(400, 50, 200, 30);
@@ -70,6 +74,10 @@ public class UIDesign {
 		speedTypeField.setBounds(300,420,200,40);
 		curveTypeJLabel.setBounds(50,460,200,40);
 		curveTypeField.setBounds(300,460,200,40);
+		warningMessageLabel.setBounds(30,200,200,30);
+		warningMessage.setBounds(150,200,400,30);
+		distanceLabel.setBounds(30,250,250,40);
+		distanceMessage.setBounds(300,300,200,40);
 		
 
 		mainWindow.add(startButton);
@@ -137,7 +145,7 @@ public class UIDesign {
 									if(finalData.getCurveData().get(curveCounter).isDirection() == true) {
 										curvePrompt.setText(speed+" Left Curve Detected!!");
 									} else {
-										curvePrompt.setText(speed+" Right Curve Detected");
+										curvePrompt.setText(speed+" Right Curve Detected!!");
 									}
 								}
 								if(finalData.getCurveData().get(curveCounter).getTimeOffsetEnd().equals(offsetFromLinear[0])) {
@@ -154,21 +162,53 @@ public class UIDesign {
 							return null;
 						} else {
 							int curveCounter = 0;
+							mainWindow.getContentPane().remove(avgSpeedLabel);
+							mainWindow.getContentPane().remove(curvePrompt);
+							mainWindow.getContentPane().remove(curveDetection);
+							mainWindow.getContentPane().remove(lastCurve);
+							mainWindow.getContentPane().remove(averageSpeed);
+							mainWindow.getContentPane().remove(gpsStart);
+							mainWindow.getContentPane().remove(gpsEnd);
+							mainWindow.getContentPane().remove(avgSpeedLabel);
+							mainWindow.getContentPane().remove(startPosition);
+							mainWindow.getContentPane().remove(endPosition);
+							mainWindow.getContentPane().remove(speedTypeLabel);
+							mainWindow.getContentPane().remove(speedTypeField);
+							mainWindow.getContentPane().remove(curveTypeJLabel);
+							mainWindow.getContentPane().remove(curveTypeField);
+							mainWindow.repaint();
+							mainWindow.add(warningMessageLabel);
+							mainWindow.add(warningMessage);
+							mainWindow.add(distanceLabel);
+							mainWindow.add(distanceMessage);
 							for (int i = 0; i < finalData.getUIArray().size(); i++) {
 								if(isCancelled()) {
 									break;
 								}
-								
 								linearValues.setText(finalData.getUIArray().get(i));
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
+//								System.out.println(finalData.getUIArray().get(i));
 								if(finalData.getCurveData().get(curveCounter).getGpsLatLongStart().equals(offsetFromLinear[6])) {
+									String tmp = "";
 									if(finalData.getCurveData().get(curveCounter).isDirection() == true) {
-										curvePrompt.setText("Left Curve Detected!!");
+										tmp = "Left Curve Detected!!";
 									} else {
-										curvePrompt.setText(" Right Curve Detected");
+										tmp = " Right Curve Detected";
 									}
+									tmp = tmp + " maintain average speed of "+ finalData.getCurveData().get(curveCounter).getAverageVehicleSpeed();
+									warningMessage.setText(tmp);
+									
+									Float currenttime = Float.parseFloat(offsetFromLinear[0]);
+									Float startTime = Float.parseFloat(finalData.getCurveData().get(curveCounter).getTimeOffset());
+									Float diff = (startTime - currenttime)/3600000F;
+									Float avgSpeed = Float.parseFloat(finalData.getCurveData().get(curveCounter).getAverageVehicleSpeed());
+									Float distance = (diff*avgSpeed)*1000F;
+									distanceMessage.setText(distance+"");
+									
+									++curveCounter;
 								}
-
+								Thread.sleep(1);
+//Include the average speed of the curve and the direction (left/right) in the issued warning.
 							}
 						}
 						return null;
