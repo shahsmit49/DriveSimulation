@@ -42,6 +42,7 @@ public class UIDesign {
 		JTextField gpsEnd = new JTextField();
 		JTextField speedTypeField = new JTextField();
 		JTextField curveTypeField = new JTextField();
+		JTextField warningMessage = new JTextField();
 		
 		columnFormat = new JLabel(
 				"Time offset   |   Speed   |   Steering Angle    |    Yaw Rate   |   Lateral Acc.   |   Longi Acc.   |   GPS Lat:Lon ");
@@ -52,6 +53,7 @@ public class UIDesign {
 		JLabel endPosition = new JLabel("Curve End Position :");
 		JLabel speedTypeLabel = new JLabel("Speed Type : ");
 		JLabel curveTypeJLabel = new JLabel("Curve Type");
+		JLabel warningMessageLabel = new JLabel("Warnings : ");
 
 		startButton.setBounds(150, 50, 200, 30);
 		resetButton.setBounds(400, 50, 200, 30);
@@ -70,6 +72,8 @@ public class UIDesign {
 		speedTypeField.setBounds(300,420,200,40);
 		curveTypeJLabel.setBounds(50,460,200,40);
 		curveTypeField.setBounds(300,460,200,40);
+		warningMessageLabel.setBounds(30,200,200,30);
+		warningMessage.setBounds(150,200,400,30);
 		
 
 		mainWindow.add(startButton);
@@ -123,7 +127,7 @@ public class UIDesign {
 							startButton.setEnabled(false);
 						}
 						if(flag == 0) {
-//							flag = 1;
+							flag = 1;
 							int curveCounter = 0;
 
 							for (int i = 0; i < finalData.getUIArray().size(); i++) {
@@ -137,7 +141,7 @@ public class UIDesign {
 									if(finalData.getCurveData().get(curveCounter).isDirection() == true) {
 										curvePrompt.setText(speed+" Left Curve Detected!!");
 									} else {
-										curvePrompt.setText(speed+" Right Curve Detected");
+										curvePrompt.setText(speed+" Right Curve Detected!!");
 									}
 								}
 								if(finalData.getCurveData().get(curveCounter).getTimeOffsetEnd().equals(offsetFromLinear[0])) {
@@ -158,12 +162,31 @@ public class UIDesign {
 								if(isCancelled()) {
 									break;
 								}
+								mainWindow.getContentPane().remove(avgSpeedLabel);
+								mainWindow.getContentPane().remove(curvePrompt);
+								mainWindow.getContentPane().remove(curveDetection);
+								mainWindow.getContentPane().remove(lastCurve);
+								mainWindow.getContentPane().remove(averageSpeed);
+								mainWindow.getContentPane().remove(gpsStart);
+								mainWindow.getContentPane().remove(gpsEnd);
+								mainWindow.getContentPane().remove(avgSpeedLabel);
+								mainWindow.getContentPane().remove(startPosition);
+								mainWindow.getContentPane().remove(endPosition);
+								mainWindow.getContentPane().remove(speedTypeLabel);
+								mainWindow.getContentPane().remove(speedTypeField);
+								mainWindow.getContentPane().remove(curveTypeJLabel);
+								mainWindow.getContentPane().remove(curveTypeField);
+								mainWindow.repaint();
+								mainWindow.add(warningMessageLabel);
+								mainWindow.add(warningMessage);
 
 								linearValues.setText(finalData.getUIArray().get(i));
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
 								if(finalData.getCurveData().get(curveCounter).getGpsLatLongStart().equals(offsetFromLinear[6])) {
+									//add here
 									
 								}
+								Thread.sleep(1);
 
 							}
 						}
