@@ -13,7 +13,7 @@ public class UIDesign {
 	private List<SensorObj> dataArray = new ArrayList<SensorObj>();
 	private List<String> UIArray = new ArrayList<String>();
 	SwingWorker<String, String> worker = null;
-
+	int flag = 0;
 	void display(CurveSensorPojo finalData) {
 
 //		this.dataArray = dataArray;
@@ -78,8 +78,7 @@ public class UIDesign {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-//				System.out.println("asdasdsads");
+
 				worker = new SwingWorker<String, String>() {
 					@Override
 					protected String doInBackground() throws Exception {
@@ -87,27 +86,49 @@ public class UIDesign {
 						if(worker != null) {
 							startButton.setEnabled(false);
 						}
-//						SimulatorToDisplaySensorData obj = new SimulatorToDisplaySensorData();
-//						UIArray = obj.displaySensorInformation(dataArray);
-						for (int i = 0; i < finalData.getUIArray().size(); i++) {
-							if(isCancelled()) {
-								break;
-							}
-							linearValues.setText(finalData.getUIArray().get(i));
-							String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
-							if(finalData.getCurveData().get(0).getTimeOffset().equals(offsetFromLinear[0])) {
-								if(finalData.getCurveData().get(0).isDirection() == true) {
-									curvePrompt.setText("Left Curve Detected");
-									finalData.getCurveData().remove(0);
+						if(flag == 0) {
+							flag = 1;
+							int curveCounter = 0;
+
+							for (int i = 0; i < finalData.getUIArray().size(); i++) {
+								if(isCancelled()) {
+									break;
 								}
-								else {
-									curvePrompt.setText("Right Curve Detected");
-									finalData.getCurveData().remove(0);
+
+								linearValues.setText(finalData.getUIArray().get(i));
+								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
+								if(finalData.getCurveData().get(curveCounter).getTimeOffset().equals(offsetFromLinear[0])) {
+									if(finalData.getCurveData().get(curveCounter).isDirection() == true) {
+										curvePrompt.setText("Left Curve Detected");
+
+										++curveCounter;
+									}
+									else {
+										curvePrompt.setText("Right Curve Detected");
+
+										++curveCounter;
+									}
 								}
+
 							}
-							Thread.sleep(1);
+							return null;
+						} else {
+							int curveCounter = 0;
+							for (int i = 0; i < finalData.getUIArray().size(); i++) {
+								if(isCancelled()) {
+									break;
+								}
+
+								linearValues.setText(finalData.getUIArray().get(i));
+								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
+								if(finalData.getCurveData().get(curveCounter).getGpsLatLongStart().equals(offsetFromLinear[6])) {
+									
+								}
+
+							}
 						}
 						return null;
+						
 					}
 
 				};
