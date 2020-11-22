@@ -123,7 +123,7 @@ public class UIDesign {
 							startButton.setEnabled(false);
 						}
 						if(flag == 0) {
-//							flag = 1;
+							flag = 1;
 							int curveCounter = 0;
 
 							for (int i = 0; i < finalData.getUIArray().size(); i++) {
@@ -158,11 +158,17 @@ public class UIDesign {
 								if(isCancelled()) {
 									break;
 								}
-
+								
 								linearValues.setText(finalData.getUIArray().get(i));
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
 								if(finalData.getCurveData().get(curveCounter).getGpsLatLongStart().equals(offsetFromLinear[6])) {
-									
+									String speed = finalData.getCurveData().get(curveCounter).isspeedflag() == true 
+											? "High Speed" : "Low Speed";
+									if(finalData.getCurveData().get(curveCounter).isDirection() == true) {
+										curvePrompt.setText(speed+" Left Curve Detected!!");
+									} else {
+										curvePrompt.setText(speed+" Right Curve Detected");
+									}
 								}
 
 							}
