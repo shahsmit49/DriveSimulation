@@ -191,11 +191,16 @@ public class SimulatorToDisplaySensorData {
 					"\t\t"+yawRate.substring(0, yaw)+"\t\t"+latAccel.substring(0, latAc)+"\t\t"+longAccel.substring(0, longAc)+"\t\t"+gpsLatLong;
 			
 			//displaying data on console
-			System.out.print(displayData+"\r");
+			if(i < dataArray.size()-1) {
+				System.out.print(displayData+"\r");
+			} else {
+				System.out.print(displayData);
+			}
+			
 			
 		}
 		
-		//if the curve didnot ended on last reading then taking last reading as curve end
+		//if the curve did not ended on last reading then taking last reading as curve end
 		if(flag == 1 || flag == -1) {
 			curveDetected.setGpsLatLongEnd(gpsLatLong);
 			float averageSpeed = (speedSum/speedCounter);
@@ -213,7 +218,7 @@ public class SimulatorToDisplaySensorData {
 		finalData.setCurveData(curveData);
 		finalData.setUIArray(UIArray);
 		
-		//returning pojo that containns all sensor data and curve info.
+		//returning pojo that contains all sensor data and curve info.
 		return finalData;
 	}
 }
