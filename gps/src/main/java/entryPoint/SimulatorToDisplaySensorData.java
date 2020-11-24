@@ -25,7 +25,7 @@ public class SimulatorToDisplaySensorData {
 		CurveSensorPojo finalData = new CurveSensorPojo();
 		int flag = 0;
 		System.out.println("CurrentTime"+"\t"+"VehicleSpeed"+"\t"+"SteerAngle"+
-				"\t"+"YawRate"+"\t\t"+"LatAccel"+"\t"+"LongAccel"+"\t"+"GPS Lat/Long");
+				"\t"+"YawRate"+"\t"+"LatAccel"+"\t"+"LongAccel"+"\t"+"GPS Lat/Long");
 		CurveInfo curveDetected = null;
 		Float speedSum = 0F;
 		Float speedCounter = 0F;
@@ -140,8 +140,14 @@ public class SimulatorToDisplaySensorData {
 					"\t"+yawRate+"\t"+latAccel+"\t"+longAccel+"\t"+gpsLatLong;
 			UIArray.add(s);
 			
-			String displayData = currentTime+"\t\t"+vehicleSpeed+"\t\t"+steerAngle+
-					"\t\t\t"+yawRate+"\t\t\t"+latAccel+"\t\t\t"+longAccel+"\t\t\t"+gpsLatLong;
+			int speed = vehicleSpeed.length() < 5 ? vehicleSpeed.length() : 5;
+			int latAc = latAccel.length() < 5 ? latAccel.length() : 5;
+			int longAc = longAccel.length() < 5 ? longAccel.length() : 5;
+			int yaw = yawRate.length() < 5 ? yawRate.length() : 5;
+			
+			String displayData = currentTime+"\t\t"+vehicleSpeed.substring(0, speed)+"\t\t"+steerAngle+
+					"\t\t"+yawRate.substring(0, yaw)+"\t\t"+latAccel.substring(0, latAc)+"\t\t"+longAccel.substring(0, longAc)+"\t\t"+gpsLatLong;
+			
 			System.out.print(displayData+"\r");
 			
 		}
