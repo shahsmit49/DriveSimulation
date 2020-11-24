@@ -99,24 +99,24 @@ public class UIDesign {
 		curveDetectionLabel.setBounds(660, 250, 200, 30);
 		curveDetectionLabel.setForeground(Color.BLUE);
 		curveDetectionLabel.setFont(new Font("Serif", Font.BOLD, 20));
-		curvePrompt.setBounds(615, 320, 250, 30);
+		curvePrompt.setBounds(615, 300, 250, 30);
 		curvePrompt.setForeground(Color.RED);
 		curvePrompt.setFont(new Font("Serif", Font.PLAIN, 16));
 		
-		lastCurve.setBounds(630, 450, 250, 40);
+		lastCurve.setBounds(630, 420, 250, 40);
 		lastCurve.setForeground(Color.decode("#1F6601"));
 		lastCurve.setFont(new Font("Serif", Font.BOLD, 20));
 
-		avgSpeedLabel.setBounds(300, 550, 200, 40);
-		averageSpeed.setBounds(450, 550, 200, 40);
-		startPosition.setBounds(285, 650, 200, 40);
-		gpsStart.setBounds(450, 650, 200, 40);
-		speedTypeLabel.setBounds(950, 550, 200, 40);
-		speedTypeField.setBounds(1100, 550, 200, 40);
-		endPosition.setBounds(935, 650, 200, 40);
-		gpsEnd.setBounds(1100, 650, 200, 40);
-		curveTypeJLabel.setBounds(315, 750, 200, 40);
-		curveTypeField.setBounds(450, 750, 200, 40);
+		avgSpeedLabel.setBounds(300, 500, 200, 40);
+		averageSpeed.setBounds(450, 500, 200, 40);
+		startPosition.setBounds(285, 580, 200, 40);
+		gpsStart.setBounds(450, 580, 200, 40);
+		speedTypeLabel.setBounds(950, 500, 200, 40);
+		speedTypeField.setBounds(1100, 500, 200, 40);
+		endPosition.setBounds(935, 580, 200, 40);
+		gpsEnd.setBounds(1100, 580, 200, 40);
+		curveTypeJLabel.setBounds(315, 660, 200, 40);
+		curveTypeField.setBounds(450, 660, 200, 40);
 		
 		warningMessageLabel.setBounds(680, 250, 200, 30);
 		warningMessageLabel.setForeground(Color.decode("#DC7500"));
