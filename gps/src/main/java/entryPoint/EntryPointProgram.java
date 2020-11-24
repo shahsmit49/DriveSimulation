@@ -20,14 +20,15 @@ public class EntryPointProgram {
 		Parser parse = new Parser();
 		
 		//call method to parse our input files
-
 		List<SensorObj> dataArray = parse.inputFiles(canMessages, gpsTrack);
+		
+		//simulator call to display all reading on console with carriage return
 		SimulatorToDisplaySensorData simulatorToDisplaySensorData = new SimulatorToDisplaySensorData();
 		CurveSensorPojo finalData = simulatorToDisplaySensorData.displaySensorInformation(dataArray);
+		
+		//calling UI to do simulation 3-4 from assignments
 		UIDesign graphicalInterface = new UIDesign();
 		graphicalInterface.display(finalData);
-//		System.out.println(canMessages);
-//		System.out.println(gpsTrack);
 	}
 
 //	Error: Could not find or load main class

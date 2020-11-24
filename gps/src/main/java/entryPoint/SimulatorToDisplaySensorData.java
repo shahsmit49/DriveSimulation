@@ -15,7 +15,9 @@ public class SimulatorToDisplaySensorData {
 	
 	public CurveSensorPojo displaySensorInformation(List<SensorObj> dataArray) {
 		
+		//defining UI array which will hold all sensor data at specific offset
 		List<String> UIArray = new ArrayList<String>();
+		
 		List<CurveInfo> curveData = new ArrayList<CurveInfo>();
 		CurveSensorPojo finalData = new CurveSensorPojo();
 		int flag = 0;
@@ -133,8 +135,12 @@ public class SimulatorToDisplaySensorData {
 
 			String s = currentTime+"\t"+vehicleSpeed+"\t"+steerAngle+
 					"\t"+yawRate+"\t"+latAccel+"\t"+longAccel+"\t"+gpsLatLong;
-			System.out.print(s+"\r");
 			UIArray.add(s);
+			
+			String displayData = currentTime+"\t\t"+vehicleSpeed+"\t\t"+steerAngle+
+					"\t\t"+yawRate+"\t\t"+latAccel+"\t\t"+longAccel+"\t\t"+gpsLatLong;
+			System.out.print(displayData+"\r");
+			
 		}
 		if(flag == 1 || flag == -1) {
 			curveDetected.setGpsLatLongEnd(gpsLatLong);
