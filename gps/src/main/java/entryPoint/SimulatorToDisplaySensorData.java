@@ -25,7 +25,7 @@ public class SimulatorToDisplaySensorData {
 		CurveSensorPojo finalData = new CurveSensorPojo();
 		int flag = 0;
 		System.out.println("CurrentTime"+"\t"+"VehicleSpeed"+"\t"+"SteerAngle"+
-				"\t"+"YawRate"+"\t"+"LatAccel"+"\t"+"LongAccel"+"\t"+"GPS Lat/Long");
+				"\t"+"YawRate"+"\t\t"+"LatAccel"+"\t"+"LongAccel"+"\t"+"GPS Lat/Long");
 		CurveInfo curveDetected = null;
 		Float speedSum = 0F;
 		Float speedCounter = 0F;

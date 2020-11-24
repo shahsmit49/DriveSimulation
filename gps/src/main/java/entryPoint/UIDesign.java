@@ -373,9 +373,6 @@ public class UIDesign {
 									warning.setText("");
 								}
 								
-
-//								Thread.sleep(1);
-//Include the average speed of the curve and the direction (left/right) in the issued warning.
 							}
 						
 						}	
