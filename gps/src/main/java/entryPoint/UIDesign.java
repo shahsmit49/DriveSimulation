@@ -4,32 +4,33 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 public class UIDesign {
 
-	private List<SensorObj> dataArray = new ArrayList<SensorObj>();
-	private List<String> UIArray = new ArrayList<String>();
 	SwingWorker<String, String> worker = null;
 	int flag = 0;
 
 	void display(CurveSensorPojo finalData) {
 
 //		this.dataArray = dataArray;
-		List<CurveInfo> curveData = finalData.getCurveData();
-		for (CurveInfo curveInfo : curveData) {
-
-			System.out.println("TimeOffset: " + curveInfo.getTimeOffset());
-			System.out.println("TimeOffsetEnd: " + curveInfo.getTimeOffsetEnd());
-			System.out.println("averageVehicleSpeed: " + curveInfo.getAverageVehicleSpeed());
-			System.out.println("gpsLatLongStart: " + curveInfo.getGpsLatLongStart());
-			System.out.println("gpsLatLongEnd: " + curveInfo.getGpsLatLongEnd());
-			System.out.println("SpeedFlag: " + (curveInfo.isspeedflag() == true ? "highspeed" : "lowspeed"));
-			System.out.println("Direction: " + (curveInfo.isDirection() == true ? "left" : "right"));
-			System.out.println("----------------------------------------------------------------------");
-		}
+//		List<CurveInfo> curveData = finalData.getCurveData();
+//		for (CurveInfo curveInfo : curveData) {
+//
+//			System.out.println("TimeOffset: " + curveInfo.getTimeOffset());
+//			System.out.println("TimeOffsetEnd: " + curveInfo.getTimeOffsetEnd());
+//			System.out.println("averageVehicleSpeed: " + curveInfo.getAverageVehicleSpeed());
+//			System.out.println("gpsLatLongStart: " + curveInfo.getGpsLatLongStart());
+//			System.out.println("gpsLatLongEnd: " + curveInfo.getGpsLatLongEnd());
+//			System.out.println("SpeedFlag: " + (curveInfo.isspeedflag() == true ? "highspeed" : "lowspeed"));
+//			System.out.println("Direction: " + (curveInfo.isDirection() == true ? "left" : "right"));
+//			System.out.println("----------------------------------------------------------------------");
+//		}
 		JFrame mainWindow;
 		mainWindow = new JFrame();
 
@@ -196,19 +197,41 @@ public class UIDesign {
 					@Override
 					protected String doInBackground() throws Exception {
 						// TODO Auto-generated method stub
+						
 						if (worker != null) {
 							startButton.setEnabled(false);
 						}
 						if (flag == 0) {
 							flag = 1;
 							int curveCounter = 0;
-
+							
+							long time = System.currentTimeMillis();
+							long prev = 0;
 							for (int i = 0; i < finalData.getUIArray().size(); i++) {
 								if (isCancelled()) {
 									break;
 								}
 								
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
+
+								while(System.currentTimeMillis() < time) {
+									//do nothing;
+								}
+
+								if(i + 1 < finalData.getUIArray().size()) {
+									String[] offsetFromLinearNext = finalData.getUIArray().get(i+1).split("\\s+");
+
+									try {
+										long nexttime = (long)(Double.parseDouble(offsetFromLinearNext[0]));
+										time = time + (nexttime - prev);
+										prev = nexttime;
+									} catch(Exception e) {
+
+										e.printStackTrace();
+									}
+
+								}
+									
 								timeOffsetText.setText(offsetFromLinear[0]);
 								speedText.setText(offsetFromLinear[1]);
 								steerAngleText.setText(offsetFromLinear[2]);
@@ -245,7 +268,7 @@ public class UIDesign {
 													: "Low Speed");
 									++curveCounter;
 								}
-								Thread.sleep(1);
+//								Thread.sleep(1);
 							}
 							return null;
 						} else {
@@ -269,11 +292,33 @@ public class UIDesign {
 							mainWindow.add(warning);
 							mainWindow.add(distanceLabel);
 							mainWindow.add(distanceMessage);
+							long time = System.currentTimeMillis();
+							long prev = 0;
 							for (int i = 0; i < finalData.getUIArray().size(); i++) {
+
 								if (isCancelled()) {
 									break;
 								}
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
+								
+								while(System.currentTimeMillis() < time) {
+									//do nothing;
+								}
+
+								if(i + 1 < finalData.getUIArray().size()) {
+									String[] offsetFromLinearNext = finalData.getUIArray().get(i+1).split("\\s+");
+
+									try {
+										long nexttime = (long)(Double.parseDouble(offsetFromLinearNext[0]));
+										time = time + (nexttime - prev);
+										prev = nexttime;
+									} catch(Exception e) {
+
+										e.printStackTrace();
+									}
+
+								}
+								
 								timeOffsetText.setText(offsetFromLinear[0]);
 								speedText.setText(offsetFromLinear[1]);
 								steerAngleText.setText(offsetFromLinear[2]);
@@ -282,7 +327,7 @@ public class UIDesign {
 								LongiAccText.setText(offsetFromLinear[5]);
 								gpsText.setText(offsetFromLinear[6]);
 //								System.out.println(finalData.getUIArray().get(i));
-								if (finalData.getCurveData().get(curveCounter).getGpsLatLongStart()
+								if (curveCounter < finalData.getCurveData().size() && finalData.getCurveData().get(curveCounter).getGpsLatLongStart()
 										.equals(offsetFromLinear[6])) {
 									String tmp = "";
 									if (finalData.getCurveData().get(curveCounter).isDirection() == true) {
@@ -305,7 +350,9 @@ public class UIDesign {
 
 									++curveCounter;
 								}
-								Thread.sleep(1);
+								
+
+//								Thread.sleep(1);
 //Include the average speed of the curve and the direction (left/right) in the issued warning.
 							}
 						}

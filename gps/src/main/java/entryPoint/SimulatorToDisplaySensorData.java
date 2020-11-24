@@ -1,8 +1,6 @@
 package entryPoint;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.List;
 
 public class SimulatorToDisplaySensorData {
@@ -26,19 +24,41 @@ public class SimulatorToDisplaySensorData {
 		CurveInfo curveDetected = null;
 		Float speedSum = 0F;
 		Float speedCounter = 0F;
-		for(SensorObj obj : dataArray) {
-			currentTime = obj.getTimeOffset();
-			if(obj.getType().equals("Displa vehicle speed(km/hr): ")) {
+		
+		long time = System.currentTimeMillis();
+		long prev = 0;
+		
+		for(int i = 0 ; i < dataArray.size() ; ++i) {
+			
+			currentTime = dataArray.get(i).getTimeOffset();
+			
+//			while(System.currentTimeMillis() < time) {
+//				//do nothing;
+//			}
+
+			if(i + 1 < dataArray.size()) {
+				try {
+					long nexttime = (long)(Double.parseDouble(currentTime));
+					time = time + (nexttime - prev);
+					prev = nexttime;
+				} catch(Exception e) {
+
+					e.printStackTrace();
+				}
+
+			}
+			
+			if(dataArray.get(i).getType().equals("Displa vehicle speed(km/hr): ")) {
 				
 				if(flag == 1 || flag == -1) {
 					speedSum = speedSum + Float.parseFloat(vehicleSpeed); 
 					speedCounter += 1;
 				}
-				vehicleSpeed = obj.getValue();
+				vehicleSpeed = dataArray.get(i).getValue();
 			}
-			if(obj.getType().equals("Steering wheel angle(degrees): ")) {
+			if(dataArray.get(i).getType().equals("Steering wheel angle(degrees): ")) {
 				
-				String newValue = obj.getValue();
+				String newValue = dataArray.get(i).getValue();
 				
 				Float newValueOfSteerAngle = Float.parseFloat(newValue);
 //				Float oldValueOfSteerAngle = steerAngle.equals("-") ? newValueOfSteerAngle : Float.parseFloat(steerAngle);
@@ -98,17 +118,17 @@ public class SimulatorToDisplaySensorData {
 				}
 				steerAngle = newValue;
 			}
-			if(obj.getType().equals("Vehicle yaw rate(degree/sec):  ")) {
-				yawRate = obj.getValue();
+			if(dataArray.get(i).getType().equals("Vehicle yaw rate(degree/sec):  ")) {
+				yawRate = dataArray.get(i).getValue();
 			}
-			if(obj.getType().equals("Vehicle lat accele(m/sec^2): ")) {
-				latAccel = obj.getValue();
+			if(dataArray.get(i).getType().equals("Vehicle lat accele(m/sec^2): ")) {
+				latAccel = dataArray.get(i).getValue();
 			}
-			if(obj.getType().equals("Vehicle longi accele(m/sec^2): ")) {
-				longAccel = obj.getValue();
+			if(dataArray.get(i).getType().equals("Vehicle longi accele(m/sec^2): ")) {
+				longAccel = dataArray.get(i).getValue();
 			}
-			if(obj.getType().equals("GPS data(Latitude:Longitude)")) {
-				gpsLatLong = obj.getValue();
+			if(dataArray.get(i).getType().equals("GPS data(Latitude:Longitude)")) {
+				gpsLatLong = dataArray.get(i).getValue();
 			}
 
 			String s = currentTime+"\t"+vehicleSpeed+"\t"+steerAngle+
