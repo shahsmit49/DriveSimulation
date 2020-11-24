@@ -125,8 +125,8 @@ public class UIDesign {
 		warningMessageLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		warning.setForeground(Color.RED);
 		warning.setFont(new Font("Serif", Font.PLAIN, 15));
-//		distanceLabel.setBounds(30, 250, 250, 40);
-//		distanceMessage.setBounds(300, 300, 200, 40);
+		distanceLabel.setBounds(520, 400, 250, 40);
+		distanceMessage.setBounds(700, 400, 200, 40);
 
 
 		mainWindow.add(startButton);
@@ -202,6 +202,7 @@ public class UIDesign {
 							startButton.setEnabled(false);
 						}
 						if (flag == 0) {
+							try {
 							flag = 1;
 							int curveCounter = 0;
 							
@@ -270,8 +271,10 @@ public class UIDesign {
 								}
 //								Thread.sleep(1);
 							}
+							}catch(Exception e) {e.printStackTrace();} 
 							return null;
 						} else {
+							try {
 							int curveCounter = 0;
 							mainWindow.getContentPane().remove(avgSpeedLabel);
 							mainWindow.getContentPane().remove(curvePrompt);
@@ -327,8 +330,23 @@ public class UIDesign {
 								LongiAccText.setText(offsetFromLinear[5]);
 								gpsText.setText(offsetFromLinear[6]);
 //								System.out.println(finalData.getUIArray().get(i));
-								if (curveCounter < finalData.getCurveData().size() && finalData.getCurveData().get(curveCounter).getGpsLatLongStart()
-										.equals(offsetFromLinear[6])) {
+								double distance = 0;
+								if(curveCounter < finalData.getCurveData().size()) {
+									String coordinates[] = offsetFromLinear[6].split(":");
+									double latitudeCurrent = Double.parseDouble(coordinates[0]);
+									double longitudeCurrent = Double.parseDouble(coordinates[1]);
+									
+									String coordinatesCurve[] = finalData.getCurveData().get(curveCounter).getGpsLatLongStart().split(":");
+									double latitudeCurve = Double.parseDouble(coordinatesCurve[0]);
+									double longitudeCurve = Double.parseDouble(coordinatesCurve[1]);
+									
+									distance = distance(latitudeCurrent,longitudeCurrent,latitudeCurve,longitudeCurve)*1000;
+								}
+								
+								
+								
+								
+								if (distance < 100.0 && curveCounter < finalData.getCurveData().size()) {
 									String tmp = "";
 									if (finalData.getCurveData().get(curveCounter).isDirection() == true) {
 										tmp = "Left Curve Ahead!!";
@@ -339,25 +357,28 @@ public class UIDesign {
 											+ finalData.getCurveData().get(curveCounter).getAverageVehicleSpeed();
 									warning.setText(tmp);
 
-									Float currenttime = Float.parseFloat(offsetFromLinear[0]);
-									Float startTime = Float
-											.parseFloat(finalData.getCurveData().get(curveCounter).getTimeOffset());
-									Float diff = (startTime - currenttime) / 3600000F;
-									Float avgSpeed = Float.parseFloat(
-											finalData.getCurveData().get(curveCounter).getAverageVehicleSpeed());
-									Float distance = (diff * avgSpeed) * 1000F;
 									distanceMessage.setText(distance + "");
-
+									
+									
+									
+								}
+								if(curveCounter < finalData.getCurveData().size() && finalData.getCurveData().get(curveCounter).getTimeOffset().equals(offsetFromLinear[0])) {
+									warning.setText("");
 									++curveCounter;
+								}
+								if(curveCounter == finalData.getCurveData().size()) {
+									warning.setText("");
 								}
 								
 
 //								Thread.sleep(1);
 //Include the average speed of the curve and the direction (left/right) in the issued warning.
 							}
-						}
+						
+						}	
+						catch(Exception e) {e.printStackTrace();}
 						return null;
-
+						}
 					}
 
 				};
@@ -368,5 +389,20 @@ public class UIDesign {
 
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	}
+	
+	private static double distance(double lat1, double lon1, double lat2, double lon2) {
+		if ((lat1 == lat2) && (lon1 == lon2)) {
+			return 0;
+		}
+		else {
+			double theta = lon1 - lon2;
+			double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+			dist = Math.acos(dist);
+			dist = Math.toDegrees(dist);
+			dist = dist * 60 * 1.1515;
+			dist = dist * 1.609344;
+			return (dist);
+		}
 	}
 }

@@ -32,9 +32,9 @@ public class SimulatorToDisplaySensorData {
 			
 			currentTime = dataArray.get(i).getTimeOffset();
 			
-//			while(System.currentTimeMillis() < time) {
-//				//do nothing;
-//			}
+			while(System.currentTimeMillis() < time) {
+				//do nothing;
+			}
 
 			if(i + 1 < dataArray.size()) {
 				try {
