@@ -30,12 +30,13 @@ public class UIDesign {
 			System.out.println("Direction: " + (curveInfo.isDirection() == true ? "left" : "right"));
 			System.out.println("----------------------------------------------------------------------");
 		}
+		// Creating a main JFrame
 		JFrame mainWindow;
 		mainWindow = new JFrame();
-
+		// Simulation and Reset Buttons
 		JButton startButton = new JButton("Start Simulation");
 		JButton resetButton = new JButton("Reset");
-
+		// Columns Headings
 		JLabel timeOffsetLabel = new JLabel("Time Offset");
 		timeOffsetLabel.setFont(new Font("Serif", Font.BOLD, 14));
 		JTextField timeOffsetText = new JTextField();
@@ -57,10 +58,10 @@ public class UIDesign {
 		JLabel gpsLabel = new JLabel("GPS (Lat : Lon)");
 		gpsLabel.setFont(new Font("Serif", Font.BOLD, 14));
 		JTextField gpsText = new JTextField();
-		
+		// Section 2 Label to show curve warnings
 		JLabel curveDetectionLabel = new JLabel("Curve Status");
 		JLabel curvePrompt = new JLabel();
-		
+		// Section 3 Label to show data from previous curve
 		JLabel lastCurve = new JLabel("Previous Curve Stats");
 		JLabel avgSpeedLabel = new JLabel("Average Speed: ");
 		JLabel averageSpeed = new JLabel();
@@ -74,39 +75,39 @@ public class UIDesign {
 		JLabel curveTypeField = new JLabel();
 		JLabel warningMessageLabel = new JLabel("Warnings");
 		JLabel distanceLabel = new JLabel("Distance to Curve: ");
-		
+		// Labels to display warning when simulating the second time (Question 3 & 4)
 		JLabel warning = new JLabel();
 		JTextField distanceMessage = new JTextField();
 
-
+		// Positioning of Labels, Buttons and Text Fields
 		startButton.setBounds(500, 50, 200, 30);
 		resetButton.setBounds(750, 50, 200, 30);
-		timeOffsetLabel.setBounds(50,100,150,30);
-		timeOffsetText.setBounds(10,140,150,30);
-		speedLabel.setBounds(250,100,150,30);
-		speedText.setBounds(210,140,150,30);
-		steerAngleLabel.setBounds(450,100,150,30);
-		steerAngleText.setBounds(410,140,150,30);
-		yawRateLabel.setBounds(650,100,150,30);
-		yawRateText.setBounds(610,140,150,30);
-		lateralAccLabel.setBounds(850,100,150,30);
-		lateralAccText.setBounds(810,140,150,30);
-		LongiAccLabel.setBounds(1050,100,150,30);
-		LongiAccText.setBounds(1010,140,150,30);
-		gpsLabel.setBounds(1250,100,150,30);
-		gpsText.setBounds(1210,140,170,30);
-		
+		timeOffsetLabel.setBounds(50, 100, 150, 30);
+		timeOffsetText.setBounds(10, 140, 150, 30);
+		speedLabel.setBounds(250, 100, 150, 30);
+		speedText.setBounds(210, 140, 150, 30);
+		steerAngleLabel.setBounds(450, 100, 150, 30);
+		steerAngleText.setBounds(410, 140, 150, 30);
+		yawRateLabel.setBounds(650, 100, 150, 30);
+		yawRateText.setBounds(610, 140, 150, 30);
+		lateralAccLabel.setBounds(850, 100, 150, 30);
+		lateralAccText.setBounds(810, 140, 150, 30);
+		LongiAccLabel.setBounds(1050, 100, 150, 30);
+		LongiAccText.setBounds(1010, 140, 150, 30);
+		gpsLabel.setBounds(1250, 100, 150, 30);
+		gpsText.setBounds(1210, 140, 170, 30);
+		// Positioning of Section 2 Labels
 		curveDetectionLabel.setBounds(660, 250, 200, 30);
 		curveDetectionLabel.setForeground(Color.BLUE);
 		curveDetectionLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		curvePrompt.setBounds(615, 300, 250, 30);
 		curvePrompt.setForeground(Color.RED);
 		curvePrompt.setFont(new Font("Serif", Font.PLAIN, 16));
-		
+		// Positioning of Section 3 Labels
 		lastCurve.setBounds(630, 420, 250, 40);
 		lastCurve.setForeground(Color.decode("#1F6601"));
 		lastCurve.setFont(new Font("Serif", Font.BOLD, 20));
-
+		// Positioning of data Fields in Section 3
 		avgSpeedLabel.setBounds(300, 500, 200, 40);
 		averageSpeed.setBounds(450, 500, 200, 40);
 		startPosition.setBounds(285, 580, 200, 40);
@@ -117,20 +118,19 @@ public class UIDesign {
 		gpsEnd.setBounds(1100, 580, 200, 40);
 		curveTypeJLabel.setBounds(315, 660, 200, 40);
 		curveTypeField.setBounds(450, 660, 200, 40);
-		
+		// Warning Message positioning for simulation after the first one
 		warningMessageLabel.setBounds(680, 250, 200, 30);
 		warningMessageLabel.setForeground(Color.decode("#DC7500"));
 		warning.setBounds(520, 320, 500, 30);
 		warningMessageLabel.setFont(new Font("Serif", Font.BOLD, 20));
 		warning.setForeground(Color.RED);
 		warning.setFont(new Font("Serif", Font.PLAIN, 15));
-//		distanceLabel.setBounds(30, 250, 250, 40);
-//		distanceMessage.setBounds(300, 300, 200, 40);
+		distanceLabel.setBounds(520, 400, 250, 40);
+		distanceMessage.setBounds(700, 400, 200, 40);
 
-
+		// Adding all components of Main JFrame
 		mainWindow.add(startButton);
 		mainWindow.add(resetButton);
-		
 		mainWindow.add(timeOffsetLabel);
 		mainWindow.add(timeOffsetText);
 		mainWindow.add(speedLabel);
@@ -145,10 +145,8 @@ public class UIDesign {
 		mainWindow.add(LongiAccText);
 		mainWindow.add(gpsLabel);
 		mainWindow.add(gpsText);
-		
 		mainWindow.add(curveDetectionLabel);
 		mainWindow.add(curvePrompt);
-		
 		mainWindow.add(lastCurve);
 		mainWindow.add(averageSpeed);
 		mainWindow.add(gpsStart);
@@ -160,22 +158,23 @@ public class UIDesign {
 		mainWindow.add(speedTypeField);
 		mainWindow.add(curveTypeJLabel);
 		mainWindow.add(curveTypeField);
-
 		mainWindow.setSize(800, 500);
 		mainWindow.setLayout(null);
 		mainWindow.setVisible(true);
 
 		// Action listeners
+		// Reset Button
 		resetButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
+				// To verify that the thread ends before updating Labels
 				if (worker != null && !worker.isDone()) {
 					worker.cancel(true);
 
 				}
+				// Updating labels when reset button is clicked
 				timeOffsetText.setText("--");
 				speedText.setText("--");
 				steerAngleText.setText("--");
@@ -186,12 +185,12 @@ public class UIDesign {
 				startButton.setEnabled(true);
 			}
 		});
-
+		// Simulation Button
 		startButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				// Creating Swing Worker class to manage threads
 				worker = new SwingWorker<String, String>() {
 					@Override
 					protected String doInBackground() throws Exception {
@@ -199,6 +198,10 @@ public class UIDesign {
 						if (worker != null) {
 							startButton.setEnabled(false);
 						}
+						/*
+						 * Flag to differentiate between simulation 1 (Question 2) and eventual
+						 * Simulations (Question 3 & 4)
+						 */
 						if (flag == 0) {
 							flag = 1;
 							int curveCounter = 0;
@@ -207,7 +210,7 @@ public class UIDesign {
 								if (isCancelled()) {
 									break;
 								}
-								
+								// Splitting all string values to display data from sensors
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
 								timeOffsetText.setText(offsetFromLinear[0]);
 								speedText.setText(offsetFromLinear[1]);
@@ -216,10 +219,12 @@ public class UIDesign {
 								lateralAccText.setText(offsetFromLinear[4]);
 								LongiAccText.setText(offsetFromLinear[5]);
 								gpsText.setText(offsetFromLinear[6]);
-								
-								
+								// Comparing offsets to established if curve has been detected
 								if (finalData.getCurveData().get(curveCounter).getTimeOffset()
 										.equals(offsetFromLinear[0])) {
+									// Using curveDataObject to establish Speed and Direction type
+									// True -> High Speed, Left Curve
+									// False -> Low Speed, Right Curve
 									String speed = finalData.getCurveData().get(curveCounter).isspeedflag() == true
 											? "High Speed"
 											: "Low Speed";
@@ -229,16 +234,22 @@ public class UIDesign {
 										curvePrompt.setText(speed + " Right Curve Detected!!");
 									}
 								}
+								// Storing details from Previous Curve
 								if (finalData.getCurveData().get(curveCounter).getTimeOffsetEnd()
 										.equals(offsetFromLinear[0])) {
 									curvePrompt.setText("");
+									// Updating Average speed during curve
 									averageSpeed.setText(
 											finalData.getCurveData().get(curveCounter).getAverageVehicleSpeed());
+									// Updating curve start position
 									gpsStart.setText(finalData.getCurveData().get(curveCounter).getGpsLatLongStart());
+									// updating curve end position
 									gpsEnd.setText(finalData.getCurveData().get(curveCounter).getGpsLatLongEnd());
+									// updating curve direction
 									curveTypeField.setText(
 											finalData.getCurveData().get(curveCounter).isDirection() == true ? "Left"
 													: "Right");
+									// updating curve speed
 									speedTypeField
 											.setText(finalData.getCurveData().get(curveCounter).isspeedflag() == true
 													? "High Speed"
@@ -249,7 +260,9 @@ public class UIDesign {
 							}
 							return null;
 						} else {
+							// Else condition to handle simulation 2 and onwards
 							int curveCounter = 0;
+							// Removing all the components and repainting the JFrames
 							mainWindow.getContentPane().remove(avgSpeedLabel);
 							mainWindow.getContentPane().remove(curvePrompt);
 							mainWindow.getContentPane().remove(curveDetectionLabel);
@@ -265,6 +278,7 @@ public class UIDesign {
 							mainWindow.getContentPane().remove(curveTypeJLabel);
 							mainWindow.getContentPane().remove(curveTypeField);
 							mainWindow.repaint();
+							// Adding components to display warning message and distance to curve
 							mainWindow.add(warningMessageLabel);
 							mainWindow.add(warning);
 							mainWindow.add(distanceLabel);
@@ -273,6 +287,7 @@ public class UIDesign {
 								if (isCancelled()) {
 									break;
 								}
+								// Splitting all string values to display data from sensors
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
 								timeOffsetText.setText(offsetFromLinear[0]);
 								speedText.setText(offsetFromLinear[1]);
@@ -281,19 +296,21 @@ public class UIDesign {
 								lateralAccText.setText(offsetFromLinear[4]);
 								LongiAccText.setText(offsetFromLinear[5]);
 								gpsText.setText(offsetFromLinear[6]);
-//								System.out.println(finalData.getUIArray().get(i));
+								// Checking if current location is same as curve location
 								if (finalData.getCurveData().get(curveCounter).getGpsLatLongStart()
 										.equals(offsetFromLinear[6])) {
 									String tmp = "";
+									// Establishing direction of the incoming curve
 									if (finalData.getCurveData().get(curveCounter).isDirection() == true) {
 										tmp = "Left Curve Ahead!!";
 									} else {
 										tmp = " Right Curve Ahead!!";
 									}
+									// Calculating average speed to display along with warning message
 									tmp = tmp + " Please Maintain average speed of "
 											+ finalData.getCurveData().get(curveCounter).getAverageVehicleSpeed();
 									warning.setText(tmp);
-
+									
 									Float currenttime = Float.parseFloat(offsetFromLinear[0]);
 									Float startTime = Float
 											.parseFloat(finalData.getCurveData().get(curveCounter).getTimeOffset());
