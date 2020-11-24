@@ -171,19 +171,19 @@ public class UIDesign {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				// Not Working!!!
-//				timeOffsetText.setText("");
-//				speedText.setText("");
-//				steerAngleText.setText("");
-//				yawRateText.setText("");
-//				lateralAccText.setText("");
-//				LongiAccText.setText("");
-//				gpsText.setText("");
-				startButton.setEnabled(true);
+
 				if (worker != null && !worker.isDone()) {
 					worker.cancel(true);
 
 				}
+				timeOffsetText.setText("--");
+				speedText.setText("--");
+				steerAngleText.setText("--");
+				yawRateText.setText("--");
+				lateralAccText.setText("--");
+				LongiAccText.setText("--");
+				gpsText.setText("--");
+				startButton.setEnabled(true);
 			}
 		});
 
