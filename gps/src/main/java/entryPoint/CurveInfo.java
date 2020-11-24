@@ -2,10 +2,15 @@ package entryPoint;
 
 public class CurveInfo {
 	
+	//curve starting time
 	private String timeOffset;
+	//curve ending time
 	private String timeOffsetEnd;
+	//average vehicle speed throughout the curve
 	private String averageVehicleSpeed;
+	//curve start latitude longitude
 	private String gpsLatLongStart;
+	//curve end latitude longitude
 	private String gpsLatLongEnd;
 	
 	//true left ; false right

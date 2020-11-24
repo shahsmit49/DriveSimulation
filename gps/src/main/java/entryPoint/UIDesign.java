@@ -191,23 +191,27 @@ public class UIDesign {
 						 * Simulations (Question 3 & 4)
 						 */
 						if (flag == 0) {
-							try {
+
 							flag = 1;
 							int curveCounter = 0;
 							
+							//variables to wait till offset time is reached
 							long time = System.currentTimeMillis();
 							long prev = 0;
+							
 							for (int i = 0; i < finalData.getUIArray().size(); i++) {
 								if (isCancelled()) {
 									break;
 								}
 								// Splitting all string values to display data from sensors
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
-
+								
+								//code to wait till offset time is reached
 								while(System.currentTimeMillis() < time) {
 									//do nothing;
 								}
-
+								
+								//calculating next time 
 								if(i + 1 < finalData.getUIArray().size()) {
 									String[] offsetFromLinearNext = finalData.getUIArray().get(i+1).split("\\s+");
 
@@ -221,7 +225,8 @@ public class UIDesign {
 									}
 
 								}
-									
+								
+								//setting data on UI
 								timeOffsetText.setText(offsetFromLinear[0]);
 								speedText.setText(offsetFromLinear[1]);
 								steerAngleText.setText(offsetFromLinear[2]);
@@ -229,6 +234,7 @@ public class UIDesign {
 								lateralAccText.setText(offsetFromLinear[4]);
 								LongiAccText.setText(offsetFromLinear[5]);
 								gpsText.setText(offsetFromLinear[6]);
+								
 								// Comparing offsets to established if curve has been detected
 								if (finalData.getCurveData().get(curveCounter).getTimeOffset()
 										.equals(offsetFromLinear[0])) {
@@ -266,9 +272,9 @@ public class UIDesign {
 													: "Low Speed");
 									++curveCounter;
 								}
-//								Thread.sleep(1);
+
 							}
-							}catch(Exception e) {e.printStackTrace();} 
+							
 							return null;
 						} else {
 							// Else condition to handle simulation 2 and onwards
@@ -304,10 +310,12 @@ public class UIDesign {
 								// Splitting all string values to display data from sensors
 								String[] offsetFromLinear = finalData.getUIArray().get(i).split("\\s+");
 								
+								//code to wait till specific time is achieved
 								while(System.currentTimeMillis() < time) {
 									//do nothing;
 								}
-
+								
+								//updating next time to wait
 								if(i + 1 < finalData.getUIArray().size()) {
 									String[] offsetFromLinearNext = finalData.getUIArray().get(i+1).split("\\s+");
 
@@ -322,6 +330,7 @@ public class UIDesign {
 
 								}
 								
+								//setting data on UI
 								timeOffsetText.setText(offsetFromLinear[0]);
 								speedText.setText(offsetFromLinear[1]);
 								steerAngleText.setText(offsetFromLinear[2]);
@@ -329,10 +338,13 @@ public class UIDesign {
 								lateralAccText.setText(offsetFromLinear[4]);
 								LongiAccText.setText(offsetFromLinear[5]);
 								gpsText.setText(offsetFromLinear[6]);
-//								System.out.println(finalData.getUIArray().get(i));
+								
+								//variable to store distance to next curve
 								double distance = 0;
 								if(curveCounter < finalData.getCurveData().size()) {
 									String coordinates[] = offsetFromLinear[6].split(":");
+									
+									//calculating next curve distance from latitude and longitude 
 									double latitudeCurrent = Double.parseDouble(coordinates[0]);
 									double longitudeCurrent = Double.parseDouble(coordinates[1]);
 									
@@ -340,12 +352,11 @@ public class UIDesign {
 									double latitudeCurve = Double.parseDouble(coordinatesCurve[0]);
 									double longitudeCurve = Double.parseDouble(coordinatesCurve[1]);
 									
+									//getting distance in meters
 									distance = distance(latitudeCurrent,longitudeCurrent,latitudeCurve,longitudeCurve)*1000;
 								}
 								
-								
-								
-								
+								//displaying distance only if the curve is in next 100 meters
 								if (distance < 100.0 && curveCounter < finalData.getCurveData().size()) {
 
 									String tmp = "";
@@ -361,14 +372,15 @@ public class UIDesign {
 									warning.setText(tmp);
 
 									distanceMessage.setText(distance + "");
-									
-									
-									
+				
 								}
+								
+								//logic to move counter to check for next curve
 								if(curveCounter < finalData.getCurveData().size() && finalData.getCurveData().get(curveCounter).getTimeOffset().equals(offsetFromLinear[0])) {
 									warning.setText("");
 									++curveCounter;
 								}
+								//if inside the curve remove curve warning
 								if(curveCounter == finalData.getCurveData().size()) {
 									warning.setText("");
 								}
@@ -389,6 +401,7 @@ public class UIDesign {
 
 	}
 	
+	//Haversine method to calculate distance in meters between 2 coordinates
 	private static double distance(double lat1, double lon1, double lat2, double lon2) {
 		if ((lat1 == lat2) && (lon1 == lon2)) {
 			return 0;
